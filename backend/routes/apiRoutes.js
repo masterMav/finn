@@ -6,4 +6,7 @@ const router = express.Router();
 router.post("/register", apiController.register);
 router.post("/login", apiController.login);
 router.post("/change-password", apiController.changePassword);
+router.get("/", (req, res) => {
+    res.send("hello");
+})
 module.exports = router;
