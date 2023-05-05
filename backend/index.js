@@ -7,7 +7,7 @@ const apiRoutes = require("./routes/apiRoutes");
 const app = express();
 dotenv.config();
 
-// DB & server init 
+// DB & server init
 const port = process.env.PORT || 3000;
 mongoose
   .connect(process.env.DATABASE, {
@@ -19,10 +19,13 @@ mongoose
     console.log(`Listening on port: ${port}`);
     app.listen(port);
   })
-  .catch((err) => console.log(err));
+  .catch((err) => {
+    console.log(err);
+    process.exit(1);
+  });
 
 // middleware
-// app.use("/", express.static(path.join(__dirname, "views")));
+app.use("/", express.static(path.join(__dirname, "views")));
 app.use(bodyParser.json());
 
 //routes
