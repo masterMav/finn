@@ -7,7 +7,7 @@ const apiRoutes = require("./routes/apiRoutes");
 const app = express();
 dotenv.config();
 
-// DB & server init &
+// DB & server init 
 const port = process.env.PORT || 3000;
 mongoose
   .connect(process.env.DATABASE, {
