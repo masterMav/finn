@@ -21,26 +21,28 @@ const register = async (req, res) => {
         error: "Username/email already in use.",
       });
     }
-    throw error;
-  }
 
+    res.json({
+      status: "error",
+      error: "Internal Server Error",
+    });
+  }
 };
 
 const login = async (req, res) => {
-  const { username, password: plainTextPassword } = req.body;
+  const { username: userEntry, password: plainTextPassword } = req.body;
 
   try {
-    const user = await User.findOne({ username }).lean();
+    const user = await User.findOne({
+      $or: [{ username: userEntry }, { email: userEntry }],
+    }).lean();
 
     if (!user) {
       return res.json({ status: "error", error: "username not found." });
     }
 
     if (await bcrypt.compare(plainTextPassword, user.password)) {
-      const token = jwt.sign(
-        { id: user._id, username: user.username },
-        process.env.JWT_SECRET
-      );
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       return res.json({ status: "ok", data: token });
     } else {
       return res.json({ status: "error", error: "Invalid Password." });
@@ -53,7 +55,7 @@ const login = async (req, res) => {
 
 const changePassword = async (req, res) => {
   const { token, newPassword } = req.body;
-  
+
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET);
 

@@ -26,7 +26,7 @@ app.use("/", express.static(path.join(__dirname, "views")));
 app.use(bodyParser.json());
 
 //routes
-app.use('/api' ,apiRoutes);
+app.use("/api", apiRoutes);
 app.use((req, res) => {
-    res.status(404).send("not found 404");
-})
+  res.status(404).send("not found 404");
+});
