@@ -7,7 +7,6 @@ const apiRoutes = require("./routes/apiRoutes");
 const app = express();
 dotenv.config();
 
-console.log("running at all");
 // DB & server init
 const port = process.env.PORT || 3000;
 mongoose
