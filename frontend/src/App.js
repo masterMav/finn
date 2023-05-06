@@ -3,6 +3,7 @@ import Home from "./Home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
+import Create from "./Create";
 import NotFound from "./NotFound";
 
 function App() {
@@ -10,20 +11,23 @@ function App() {
     <Router>
       <div className="App">
         <Navbar />
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/register">
-              <Register />
-            </Route>
-            <Route path="*">
-              <NotFound />
-            </Route>
-          </Switch>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/register">
+            <Register />
+          </Route>
+          <Route exact path="/create">
+            <Create />
+          </Route>
+          <Route path="*">
+            <NotFound />
+          </Route>
+        </Switch>
       </div>
     </Router>
   );

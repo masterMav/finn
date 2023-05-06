@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -8,18 +9,19 @@ const Register = () => {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState("");
   const [showOTP, setShowOTP] = useState(false);
+  const history = useHistory();
   let OTP;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsPending(true);
     setError("");
-    
+
     // send email & OTP
     OTP = Math.floor(Math.random() * 1000000) % 1000000;
     setSenderOTP(OTP);
 
-    fetch("http://localhost:5000/api/verify-email", {
+    fetch("https://finn-bhvk.onrender.com/api/send-email", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, OTP }),
@@ -35,7 +37,6 @@ const Register = () => {
         setShowOTP(true);
         setIsPending(false);
         setError("");
-        // history.push("/");
       })
       .catch((err) => {
         setIsPending(false);
@@ -48,7 +49,10 @@ const Register = () => {
     setError("");
 
     if (recOTP == senderOTP) {
-      alert("matched");
+      history.push({
+        pathname: "/create",
+        state: { email },
+      });
     } else {
       setError("Invalid OTP.");
     }

@@ -6,7 +6,7 @@ const router = express.Router();
 router.post("/register", apiController.register);
 router.post("/login", apiController.login);
 router.post("/change-password", apiController.changePassword);
-router.post("/verify-email", apiController.sendEmail);
+router.post("/send-email", apiController.sendEmail);
 router.get("/", (req, res) => {
     res.send("hello");
 })
