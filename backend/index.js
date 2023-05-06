@@ -4,11 +4,13 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const apiRoutes = require("./routes/apiRoutes");
+const cors = require("cors");
+
 const app = express();
 dotenv.config();
 
 // DB & server init
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
@@ -27,6 +29,11 @@ mongoose
 // middleware
 app.use("/", express.static(path.join(__dirname, "views")));
 app.use(bodyParser.json());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 
 //routes
 app.use("/api", apiRoutes);

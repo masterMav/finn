@@ -38,7 +38,7 @@ const login = async (req, res) => {
     }).lean();
 
     if (!user) {
-      return res.json({ status: "error", error: "username not found." });
+      return res.json({ status: "error", error: "Username/Email not found." });
     }
 
     if (await bcrypt.compare(plainTextPassword, user.password)) {
