@@ -7,13 +7,12 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState("");
-  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     setIsPending(true);
-    fetch("http://localhost:5000/api/login", {
+    fetch("https://finn-bhvk.onrender.com/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
@@ -25,7 +24,6 @@ const Login = () => {
         if (result.status === "error") {
           throw result.error;
         } else {
-          console.log("Got the token: ", result.data);
           localStorage.setItem("token", result.data);
         }
         setIsPending(false);

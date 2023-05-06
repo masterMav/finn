@@ -1,6 +1,9 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const register = async (req, res) => {
   const { username, email, password: plainTextPassword } = req.body;
@@ -74,8 +77,55 @@ const changePassword = async (req, res) => {
   }
 };
 
+const sendEmail = async (req, res) => {
+  const { email, OTP } = req.body;
+
+  try {
+    const user = await User.findOne({ email: email }).lean();
+
+    // Is email already registered?
+    if (user) {
+      return res.json({ status: "error", error: "Email already in use." });
+    }
+
+    // Send email
+    const transporter = nodemailer.createTransport({
+      service: "hotmail",
+      auth: {
+        user: process.env.SRC_EMAIL,
+        pass: process.env.SRC_PASS,
+      },
+    });
+
+    const options = {
+      from: process.env.SRC_EMAIL,
+      to: email,
+      subject: "[OTP] Email verify for finn's adventure.",
+      html: `<p>Dear User,</p>
+      <p>Your one-time verification code is <b>${OTP}</b>.</p>
+      <p>Please enter this code on the verification page to complete the process.</p>
+      <p>Please do not share this code with anyone for security purposes.</p>
+      <p>Thank you for using our services.</p>
+      <p>Best regards,</p>
+      <p>Manavkumar Patel</p>`,
+    };
+
+    transporter.sendMail(options, (err, info) => {
+      if (err) {
+        res.json({ status: "error", error: "Invalid email." });
+      } else {
+        res.json({ status: "ok", data: "Email sent successfully." });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "error", error: "Internal server error." });
+  }
+};
+
 module.exports = {
   register,
   login,
   changePassword,
+  sendEmail,
 };
