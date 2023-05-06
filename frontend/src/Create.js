@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 
 const Create = () => {
   const [username, setUsername] = useState("");
@@ -7,16 +7,18 @@ const Create = () => {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState("");
   const location = useLocation();
-  const { email } = location.state;
+  const email = location.state ? location.state.email : null;
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setIsPending(true);
+    setError("");
+
     fetch("https://finn-bhvk.onrender.com/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, email, password }),
     })
       .then((res) => {
         return res.json();
@@ -24,9 +26,10 @@ const Create = () => {
       .then((result) => {
         if (result.status === "error") {
           throw result.error;
-        } else {
-          localStorage.setItem("token", result.data);
         }
+
+        // # Registration successful
+        history.push("/login");
         setIsPending(false);
         setError("");
       })
@@ -39,7 +42,7 @@ const Create = () => {
   return (
     <div className="l-login">
       <div className="login-container">
-        <p className="title">Create</p>
+        <p className="title">Create Profile</p>
         <p className="welcome-message">
           Thank you for choosing our platform. To ensure the security of your
           account, we kindly request you to create a username and password.
@@ -48,18 +51,18 @@ const Create = () => {
           difficult for others to guess.
         </p>
 
-        {email}
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-control">
             <input
               type="text"
-              placeholder="Username/Email"
+              placeholder="Username"
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
             <i className="fas fa-user"></i>
           </div>
+
           <div className="form-control">
             <input
               type="password"
@@ -70,22 +73,38 @@ const Create = () => {
             />
             <i className="fas fa-lock"></i>
           </div>
+
           {error && (
             <div className="badge rounded-pill bg-danger" id="formError">
               {error}
             </div>
           )}
-          {!isPending && <button className="submit">Create</button>}
+
+          {password.length > 0 && password.length < 8 && (
+            <div className="badge rounded-pill bg-danger" id="formError">
+              The password should be <br /> at least 8 characters long.
+            </div>
+          )}
+
+          {password.length >= 8 && !isPending && (
+            <button className="submit">Create Profile</button>
+          )}
+          {password.length < 8 && !isPending && (
+            <button className="submit" disabled>
+              Create Profile
+            </button>
+          )}
+
           {isPending && (
             <button className="submit" disabled>
-              Logging in....
+              Creating....
             </button>
           )}
         </form>
 
         <div className="additional-action">
-          <Link to="/register" className="linkStyle">
-            <p>Need an account? Sign Up</p>
+          <Link to="/login" className="linkStyle">
+            <p>Already have an account? Login</p>
           </Link>
         </div>
       </div>

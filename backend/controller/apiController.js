@@ -15,7 +15,6 @@ const register = async (req, res) => {
       email,
       password,
     });
-    console.log("user created successfully ", response);
     res.json({ status: "ok" });
   } catch (error) {
     if (error.code === 11000) {

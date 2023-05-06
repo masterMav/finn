@@ -7,6 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState("");
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,9 +27,12 @@ const Login = () => {
         } else {
           localStorage.setItem("token", result.data);
         }
+
         setIsPending(false);
         setError("");
-        // history.push("/");
+
+        // # Login successful.
+        history.push("/");
       })
       .catch((err) => {
         setIsPending(false);
