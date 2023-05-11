@@ -116,7 +116,11 @@ export function displayPausedMenu(canvas, context, level) {
   );
 
   context.font = "24px Times New Roman";
-  context.fillText("Hint: " + displayClues(level), canvas.width / 2 + 5, canvas.height / 2 + 60);
+  context.fillText(
+    "Hint: " + displayClues(level),
+    canvas.width / 2 + 5,
+    canvas.height / 2 + 60
+  );
 }
 
 export function cavesGenerator(level, canvas) {
@@ -279,7 +283,6 @@ export function calculateScore(level, selectedCave) {
 }
 
 export function displayClues(level) {
-
   let hint;
   if (level === 0) {
     hint = "Hints of the treasure hunt will be shown here!";

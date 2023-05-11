@@ -1,13 +1,13 @@
   // Draws player, controls movement: walk & jump.
   
   export default class Player {
-    constructor(gameWidth, gameHeight) {
+    constructor(gameWidth, gameHeight, pX, pY) {
       this.gameWidth = gameWidth;
       this.gameHeight = gameHeight;
       this.width = 128;
       this.height = 128;
-      this.x = 0;
-      this.y = this.gameHeight - this.height;
+      this.x = pX;
+      this.y = pY;
       this.image = document.getElementById("playerImage");
       this.frameX = 0;
       this.frameY = 0;
