@@ -12,6 +12,8 @@ import {
   calculateScore,
 } from "./displayUtil";
 
+let interval;
+
 function sendGamedata(gamedata) {
   const token = localStorage.getItem("token");
 
@@ -35,17 +37,16 @@ function sendGamedata(gamedata) {
     });
 }
 
-export function setupGame(stopGame) {
+export function getInterval() {
+  return interval;
+}
+
+export function setupGame() {
   const canvas = document.getElementById("canvas1");
   const ctx = canvas.getContext("2d");
   canvas.width = 1000;
   canvas.height = 563;
   let isRefreshed = false;
-
-  if (stopGame === 1) {
-    localStorage.removeItem("gameObj");
-    return;
-  }
 
   let gameObj = {
     score: 100,
@@ -79,7 +80,7 @@ export function setupGame(stopGame) {
   // Main variables
   let score = gameObj.score; // 100% initially then gets reduced depending on the type of level.
   let isPaused = gameObj.isPaused;
-  let interval = gameObj.interval;
+  interval = gameObj.interval;
   let elapsedTime = gameObj.elapsedTime;
   let lastTime = gameObj.lastTime;
   let gameStarted = gameObj.gameStarted; // 0 = not started, 1 = started.

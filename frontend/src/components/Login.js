@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isPending, setIsPending] = useState(false);
@@ -32,7 +32,15 @@ const Login = () => {
         setError("");
 
         // Login successful.
-        history.push("/game");
+        setIsAuthenticated(true);
+        
+        // Store authentication status in local storage
+        localStorage.setItem('isAuthenticated', JSON.stringify(true));
+        
+        if(username === "admin")
+          history.push("/admin");
+        else
+          history.push("/game");
       })
       .catch((err) => {
         setIsPending(false);

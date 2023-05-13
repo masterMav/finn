@@ -1,4 +1,4 @@
-import { setupGame } from "./utils/gameSetup";
+import { setupGame, getInterval } from "./utils/gameSetup";
 import { useLayoutEffect } from "react";
 import { useHistory } from "react-router-dom";
 import RunImage from "../images/Run.png";
@@ -11,13 +11,15 @@ import SpacebarImage from "../images/spacebar2.png";
 
 const Game = () => {
   useLayoutEffect(() => {
-
     // Start the game after all assets are loaded.
-    setupGame(0);
+    setupGame();
 
     // Cleanup function
     return () => {
-      setupGame(1);
+      const gameInterval = getInterval();
+      clearInterval(gameInterval);
+
+      localStorage.removeItem("gameObj");
     };
   }, []);
 
@@ -30,6 +32,7 @@ const Game = () => {
 
     // Restore to original CSS
     document.body.style.backgroundColor = "#fff";
+    localStorage.setItem('isAuthenticated', JSON.stringify(false));
     history.push("/");
   };
 

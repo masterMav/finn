@@ -6,8 +6,15 @@ import Register from "./components/Register";
 import Create from "./components/Create";
 import NotFound from "./components/NotFound";
 import Game from "./components/Game";
+import Admin from "./components/Admin";
+import ProtectedRoute from "./ProtectedRoute";
+import { useState } from "react";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    () => JSON.parse(localStorage.getItem("isAuthenticated")) ?? false
+  );
+
   return (
     <Router>
       <div className="App">
@@ -19,7 +26,7 @@ function App() {
 
           <Route exact path="/login">
             <Navbar />
-            <Login />
+            <Login setIsAuthenticated={setIsAuthenticated} />
           </Route>
 
           <Route exact path="/register">
@@ -32,9 +39,19 @@ function App() {
             <Create />
           </Route>
 
-          <Route exact path="/game">
-            <Game />
-          </Route>
+          <ProtectedRoute
+            exact
+            path="/game"
+            component={Game}
+            isAuthenticated={isAuthenticated}
+          />
+
+          <ProtectedRoute
+            exact
+            path="/admin"
+            component={Admin}
+            isAuthenticated={isAuthenticated} 
+          />
 
           <Route path="*">
             <Navbar />
