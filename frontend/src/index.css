@@ -13,12 +13,12 @@
   padding: 8px;
   display: flex;
   align-items: center;
-  max-width: 600px;
   margin: 0 auto;
   border-bottom: 1px solid #f2f2f2;
 }
-.navbar h2 {
+.navbar h1 {
   color: #f1356d;
+  word-spacing: 4px;
 }
 .navbar .links {
   margin-left: auto;
@@ -41,40 +41,6 @@
 #loginLink {
   padding-right: 0;
   margin-right: 0;
-}
-
-/* create new blog form */
-.create {
-  max-width: 400px;
-  margin: 80px auto;
-  text-align: center;
-}
-.create label {
-  text-align: left;
-  display: block;
-}
-.create h2 {
-  font-size: 20px;
-  color: #f1356d;
-  margin-bottom: 30px;
-}
-.create input,
-.create textarea,
-.create select {
-  width: 100%;
-  padding: 6px 10px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  box-sizing: border-box;
-  display: block;
-}
-.create button {
-  background: #f1356d;
-  color: #fff;
-  border: 0;
-  padding: 8px;
-  border-radius: 8px;
-  cursor: pointer;
 }
 
 /* Login Card */
@@ -296,7 +262,7 @@ button.submit:hover {
 }
 
 @media only screen and (max-width: 1400px) {
-  /* override left value for screens smaller than 768px */
+  /* override left value for screens smaller than 1400px */
   .sidebar {
     left: 1%;
   }
@@ -329,4 +295,49 @@ button.submit:hover {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+}
+
+/* Home page */
+.showcase {
+  position: fixed;
+  height: 100%;
+  width: 50%;
+  top: 21%;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+@media only screen and (max-width: 1400px) {
+  /* override left value for screens smaller than 1400px */
+  .showcase {
+    width: 60%;
+  }
+}
+
+.theQuote {
+  font-size: 50px;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.2em;
+}
+
+.headButton {
+  background-color: #f1356d;
+}
+
+.treeImage {
+  position: absolute;
+  opacity: .4;
+  top: 35%;
+  left: 1%;
+}
+
+.homeFooter {
+  position: absolute;
+  top: 93.5%;
+  width: 100%;
+}
+
+.homeFooter a {
+  color: inherit;
+  text-decoration: none;
 }

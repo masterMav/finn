@@ -1,5 +1,6 @@
 import { setupGame } from "./utils/gameSetup";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
+import { useHistory } from "react-router-dom";
 import RunImage from "../images/Run.png";
 import BackgroundImage from "../images/background.png";
 import CaveImage from "../images/cave.png";
@@ -9,11 +10,28 @@ import ArrowKeysImage from "../images/arrowKeys2.png";
 import SpacebarImage from "../images/spacebar2.png";
 
 const Game = () => {
-  useEffect(() => {
-    setupGame();
+  useLayoutEffect(() => {
+
+    // Start the game after all assets are loaded.
+    setupGame(0);
+
+    // Cleanup function
+    return () => {
+      setupGame(1);
+    };
   }, []);
 
   document.body.style.backgroundColor = "#e7e8d1";
+
+  const history = useHistory();
+  const logoutHandler = () => {
+    // Clear localStorage
+    localStorage.removeItem("token");
+
+    // Restore to original CSS
+    document.body.style.backgroundColor = "#fff";
+    history.push("/");
+  };
 
   return (
     <div className="game">
@@ -31,9 +49,14 @@ const Game = () => {
           <div className="display-6 fw-bold col-sm-4 text-center">
             finn's adventure
           </div>
-          <div className="col-sm-4 pt-3 px-5 fw-bold text-left">
-            <i className="bi bi-box-arrow-right px-1"></i>
-            Logout
+          <div className="col-sm-2 pt-3 px-5 mx-5 fw-bold text-left">
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-dark"
+              onClick={logoutHandler}
+            >
+              <i className="bi bi-box-arrow-right px-1"></i>Logout
+            </button>
           </div>
         </div>
       </div>

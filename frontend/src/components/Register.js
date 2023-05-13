@@ -48,7 +48,7 @@ const Register = () => {
     e.preventDefault();
     setError("");
 
-    if (recOTP == senderOTP) {
+    if (recOTP === senderOTP.toString()) {
       history.push({
         pathname: "/create",
         state: { email },

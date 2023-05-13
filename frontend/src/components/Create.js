@@ -28,7 +28,7 @@ const Create = () => {
           throw result.error;
         }
 
-        // # Registration successful
+        // Registration successful
         history.push("/login");
         setIsPending(false);
         setError("");

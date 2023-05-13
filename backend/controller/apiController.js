@@ -111,6 +111,7 @@ const sendEmail = async (req, res) => {
 
     transporter.sendMail(options, (err, info) => {
       if (err) {
+        console.log(err);
         res.json({ status: "error", error: "Invalid email." });
       } else {
         res.json({ status: "ok", data: "Email sent successfully." });
@@ -122,9 +123,30 @@ const sendEmail = async (req, res) => {
   }
 };
 
+const updateGamedata = async (req, res) => {
+  const { token, gamedata } = req.body;
+
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+
+    const _id = user.id;
+    await User.updateOne(
+      { _id },
+      {
+        $set: { gamedata },
+      }
+    );
+    res.json({ status: "ok" });
+  } catch (error) {
+    res.json({ status: "error", error: "Invalid signature." });
+    console.log(error);
+  }
+};
+
 module.exports = {
   register,
   login,
   changePassword,
   sendEmail,
+  updateGamedata,
 };

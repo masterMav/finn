@@ -13,6 +13,11 @@ const UserSchema = new mongoose.Schema(
       unique: true,
     },
     password: { type: String, required: true },
+    gamedata: {
+      type: Array,
+      required: false,
+      default: [],
+    },
   },
   { collection: "users", timestamps: true }
 );

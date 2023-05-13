@@ -31,7 +31,7 @@ const Login = () => {
         setIsPending(false);
         setError("");
 
-        // # Login successful.
+        // Login successful.
         history.push("/game");
       })
       .catch((err) => {
