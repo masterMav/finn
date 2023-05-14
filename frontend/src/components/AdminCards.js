@@ -1,4 +1,4 @@
-const AdminCards = () => {
+const AdminCards = ({ noOfUsers, avgTime, avgAttempts }) => {
   return (
     <div className="AdminCards mx-5 px-5 mt-5">
       <div className="row d-flex justify-content-center">
@@ -10,7 +10,7 @@ const AdminCards = () => {
                 <h5 className="card-title mb-0">Total Number of Users</h5>
               </div>
               <div className="col-8">
-                <h2 className="d-flex align-items-center mb-0">3243</h2>
+                <h2 className="d-flex align-items-center mb-0">{noOfUsers}</h2>
               </div>
             </div>
           </div>
@@ -24,7 +24,7 @@ const AdminCards = () => {
                 <h5 className="card-title mb-0">Avg Time Spent.</h5>
               </div>
               <div className="col-8">
-                <h2 className="d-flex align-items-center mb-0">15.07</h2>
+                <h2 className="d-flex align-items-center mb-0">{avgTime} sec</h2>
               </div>
             </div>
           </div>
@@ -38,7 +38,9 @@ const AdminCards = () => {
                 <h5 className="card-title mb-0">Avg. attempts per level.</h5>
               </div>
               <div className="col-8">
-                <h2 className="d-flex align-items-center mb-0">578</h2>
+                <h2 className="d-flex align-items-center mb-0">
+                  {avgAttempts}
+                </h2>
               </div>
             </div>
           </div>

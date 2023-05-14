@@ -1,21 +1,10 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-function LevelVsTime() {
+function LevelVsTime({data}) {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    // Data for the line chart
-    const data = [
-      { level: 0, time: 20 },
-      { level: 1, time: 30 },
-      { level: 2, time: 80 },
-      { level: 3, time: 30 },
-      { level: 4, time: 110 },
-      { level: 5, time: 90 },
-      { level: 6, time: 70 },
-    ];
-
     // Dimensions of the chart
     const width = 400;
     const height = 300;

@@ -1,21 +1,10 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-const LevelVsAttempts = () => {
+const LevelVsAttempts = ({ data }) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    // Data for the line chart
-    const data = [
-      { level: 0, time: 2 },
-      { level: 1, time: 5 },
-      { level: 2, time: 10 },
-      { level: 3, time: 3 },
-      { level: 4, time: 1 },
-      { level: 5, time: 6 },
-      { level: 6, time: 7 },
-    ];
-
     // Dimensions of the chart
     const width = 400;
     const height = 300;
@@ -45,14 +34,14 @@ const LevelVsAttempts = () => {
 
     const yScale = d3
       .scaleLinear()
-      .domain([0, d3.max(data, (d) => d.time)])
+      .domain([0, d3.max(data, (d) => d.attempts)])
       .range([height, 0]);
 
     // Define line generator
     const line = d3
       .line()
       .x((d) => xScale(d.level) + xScale.bandwidth() / 2)
-      .y((d) => yScale(d.time));
+      .y((d) => yScale(d.attempts));
 
     // Append the line to the chart
     svg
@@ -95,7 +84,7 @@ const LevelVsAttempts = () => {
       .enter()
       .append("circle")
       .attr("cx", (d) => xScale(d.level) + xScale.bandwidth() / 2)
-      .attr("cy", (d) => yScale(d.time))
+      .attr("cy", (d) => yScale(d.attempts))
       .attr("r", 4)
       .style("fill", "orange");
   }, []);

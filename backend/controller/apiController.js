@@ -143,10 +143,41 @@ const updateGamedata = async (req, res) => {
   }
 };
 
+const getGamedata = async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Verify admin
+    if (user.id === process.env.ADMIN_ID) {
+      // Verified now fetch data from DB.
+
+      User.find({ gamedata: { $exists: true, $ne: [] } }, "username gamedata")
+        .then((users) => {
+          // _id, username & gamedata successfully fetched from DB.
+
+          res.json({ status: "ok", users });
+        })
+        .catch((err) => {
+          // fetching errors.
+
+          console.error(err);
+        });
+    } else throw new Error();
+  } catch (error) {
+    // Invalid token
+    
+    res.json({ status: "error", error: "Invalid signature." });
+    console.log(error);
+  }
+};
+
 module.exports = {
   register,
   login,
   changePassword,
   sendEmail,
   updateGamedata,
+  getGamedata,
 };
