@@ -27,7 +27,6 @@ mongoose
   });
 
 // middleware
-app.use("/", express.static(path.join(__dirname, "views")));
 app.use(bodyParser.json());
 app.use(
   cors({

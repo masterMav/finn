@@ -9,7 +9,4 @@ router.post("/change-password", apiController.changePassword);
 router.post("/send-email", apiController.sendEmail);
 router.post("/update-gamedata", apiController.updateGamedata);
 router.post("/gamedata", apiController.getGamedata);
-router.get("/", (req, res) => {
-    res.send("hello");
-})
 module.exports = router;

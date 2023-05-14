@@ -13,7 +13,7 @@ function Leaderboard({ usersList }) {
   });
 
   return (
-    <div className="leaderboard text-center mt-5 border border-warning rounded border-3">
+    <div className="leaderboard text-center my-5 border border-warning rounded border-3">
       <h2 className="pb-4 mt-3 border-bottom border-warning border-3">
         Users Leaderboard
       </h2>
