@@ -37,7 +37,7 @@ const Login = ({ setIsAuthenticated }) => {
         // Store authentication status in local storage
         localStorage.setItem('isAuthenticated', JSON.stringify(true));
         
-        if(username === "admin")
+        if((username === "admin") || (username === "finn_1927@outlook.com"))
           history.push("/admin");
         else
           history.push("/game");
